@@ -8,7 +8,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#00bcd4",
     "navigationBarTitleText": "思书",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true
   },
   "tabBar":{
     "color": "#999",

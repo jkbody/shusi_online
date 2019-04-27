@@ -38,3 +38,9 @@ export function showSuccess (text) {
     icon: 'success'
   })
 }
+export function showToast (text) {
+  wx.showToast({
+    title: text,
+    icon: 'loading'
+  })
+}

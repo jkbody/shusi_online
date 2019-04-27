@@ -3,7 +3,7 @@
             @click="scanBook"
             v-if="userInfo.openId"
     >
-        <img src="../../../../static/img/scanCode.png" alt="">
+        <img src="/static/img/scanCode.png" alt="">
         <p>扫码添加图书</p>
     </div>
 
