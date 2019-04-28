@@ -41,4 +41,6 @@ router.post('/addbook', controllers.addbook)
 router.get('/getbook', controllers.getbook)
 // 获取详情
 router.get('/detail', controllers.detail)
+// 获取详情
+router.get('/gettop', controllers.gettop)
 module.exports = router

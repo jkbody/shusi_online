@@ -1,9 +1,11 @@
 <template>
     <div>
+        <!--<book-swiper></book-swiper>-->
         <book-list
                 v-for="book of books"
                 :book="book"
                 :bookId="book.id"
+                :count="book.count"
                 :key="book.id"
         ></book-list>
         <div class="footer"
@@ -15,15 +17,18 @@
 // import { request, showToast } from '@/util'
 import { request } from '@/util'
 import bookList from './components/bookList'
+import bookSwiper from './components/bookSwiper'
 
 export default {
   name: 'booksIndex',
   components: {
-    bookList
+    bookList,
+    bookSwiper
   },
   data () {
     return {
       books: [],
+      topBooks: [],
       page: 0,
       end: false
     }
@@ -57,6 +62,14 @@ export default {
       wx.stopPullDownRefresh()
       wx.hideNavigationBarLoading()
       // wx.hideToast()
+    },
+    async getTop () {
+      const res = await request({
+        method: 'GET',
+        url: '/weapp/gettop'
+      })
+      this.topBooks = res.data
+      // console.log(res.data)
     }
   },
   onPullDownRefresh () {
@@ -73,6 +86,7 @@ export default {
   },
   mounted () {
     this.getBook(true)
+    this.getTop()
   }
 }
 </script>

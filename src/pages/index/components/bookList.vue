@@ -19,7 +19,7 @@
                 </div>
                 <div class="right">
                     <div>{{book.rate}} <star :rate="book.rate"></star></div>
-                    <div>浏览量:</div>
+                    <div>浏览量:{{count}}</div>
                     <div>{{book.user_info.nickName}}</div>
                 </div>
             </div>
@@ -37,7 +37,11 @@
       }
     },
     props: {
-      'book': Array
+      'book': Array,
+      'count': {
+        type: [Number, String],
+        default: 0
+      }
     },
     components: {
       star
