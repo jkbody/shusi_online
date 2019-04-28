@@ -8,7 +8,7 @@
          >
             <div class="bookImg">
                 <img
-                        mode="aspectFit"
+                        :mode="aspectFit"
                         :src="book.image" alt="">
             </div>
             <div class="content">

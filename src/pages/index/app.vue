@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--<book-swiper></book-swiper>-->
+        <book-swiper :topBooks="topBooks"></book-swiper>
         <book-list
                 v-for="book of books"
                 :book="book"
@@ -69,7 +69,7 @@ export default {
         url: '/weapp/gettop'
       })
       this.topBooks = res.data
-      // console.log(res.data)
+      // console.log(this.topBooks)
     }
   },
   onPullDownRefresh () {
