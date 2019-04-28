@@ -33,8 +33,12 @@ router.get('/message', controllers.message.get)
 router.post('/message', controllers.message.post)
 // 新增一个测试路由
 router.get('/demo', controllers.demo)
+// 新增一个测试路由
+router.get('/demodata', controllers.demodata)
 // 新增图书
 router.post('/addbook', controllers.addbook)
 // 获取数据库里面的图书
 router.get('/getbook', controllers.getbook)
+// 获取详情
+router.get('/detail', controllers.detail)
 module.exports = router

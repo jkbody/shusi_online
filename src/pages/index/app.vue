@@ -1,6 +1,11 @@
 <template>
     <div>
-        <book-list :books="books"></book-list>
+        <book-list
+                v-for="book of books"
+                :book="book"
+                :bookId="book.id"
+                :key="book.id"
+        ></book-list>
         <div class="footer"
              v-if="end"
         >已经到底了</div>

@@ -1,31 +1,29 @@
 <template>
-    <!--<a :href="getUrl">-->
+    <!--<a :href="todetail">-->
+
     <div class="container">
-        <div v-for="book of books"
+        <div
          class="book"
-         :key="book.id">
-            <!--<a :href="'/page/detail/main?id='+{book.id}">-->
-                <!--<a :href="getUrl">-->
-                <div class="bookImg">
-                    <img
-                            mode="aspectFit"
-                            :src="book.image" alt="">
+         @click="toDetail"
+         >
+            <div class="bookImg">
+                <img
+                        mode="aspectFit"
+                        :src="book.image" alt="">
+            </div>
+            <div class="content">
+                <div class="left">
+                    <div class="title">{{book.title}}</div>
+                    <div class="author">{{book.author}}</div>
+                    <div>{{book.publisher}}</div>
                 </div>
-                <div class="content">
-                    <div class="left">
-                        <div class="title">{{book.title}}</div>
-                        <div class="author">{{book.author}}</div>
-                        <div>{{book.publisher}}</div>
-                    </div>
-                    <div class="right">
-                        <div>{{book.rate}} <star :rate="book.rate"></star></div>
-                        <div>浏览量:</div>
-                        <div>{{book.user_info.nickName}}</div>
-                    </div>
+                <div class="right">
+                    <div>{{book.rate}} <star :rate="book.rate"></star></div>
+                    <div>浏览量:</div>
+                    <div>{{book.user_info.nickName}}</div>
                 </div>
-            <!--</a>-->
+            </div>
         </div>
-        <a :href="getUrl">测试跳转</a>
     </div>
     <!--</a>-->
 </template>
@@ -39,15 +37,22 @@
       }
     },
     props: {
-      'books': Array
+      'book': Array
     },
     components: {
       star
     },
+    methods: {
+      toDetail () {
+        wx.navigateTo({
+          url: `/pages/detail/main?id=${this.book.id}`
+        })
+      }
+    },
     computed: {
-      getUrl () { // 将id传过去
+      todetail () { // 将id传过去
         // return `/page/detail/main?id=${this.book.id}`
-        return `/pages/detail/main`
+        return `/pages/me/main`
       }
     },
     mounted () {
