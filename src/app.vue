@@ -3,6 +3,9 @@
 export default {
   name: 'app',
   async created () {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
     // const res = await request({
     //   url: '/weapp/demo'
     // })

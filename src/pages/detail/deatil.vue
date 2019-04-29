@@ -1,18 +1,22 @@
 <template>
     <div>
-        <div>id:{{bookId}}</div>
-        <!--<div @click="getTestID">点击获取id</div>-->
+        <!--<detail-header :book="book"></detail-header>-->
+        <detail-header :detailBook="detailBook"></detail-header>
     </div>
 </template>
 
 <script>
   import { request } from '@/util'
+  import detailHeader from './components/detailHeader'
   export default {
     name: 'app',
     data () {
       return {
-        bookId: null
+        detailBook: {}
       }
+    },
+    components: {
+      detailHeader
     },
     methods: {
       async getDetail () {
@@ -23,10 +27,20 @@
             bookId: this.bookId
           }
         })
-        console.log(res)
+        // this.detailBook = res.data[0]
+        this.detailBook = res.data
+        wx.setNavigationBarTitle({
+          title: this.detailBook.title
+        })
+        // console.log(this.detailBook)
       }
     },
     mounted () {
+      wx.showShareMenu({
+        withShareTicket: true
+      })
+    },
+    onShow () {
       this.bookId = this.$root.$mp.query.id
       this.getDetail()
     }

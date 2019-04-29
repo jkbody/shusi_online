@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import star from './compontents/star'
+  import star from '@/pages/public_components/star'
   export default {
     name: 'bookList',
     data () {

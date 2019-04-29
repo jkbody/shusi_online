@@ -1,14 +1,20 @@
 <template>
     <div class="swiper_wrap">
-        <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+        <swiper class="swiper"
+                :indicator-dots="indicatorDots"
+                :autoplay="autoplay"
+                :interval="interval"
+                :duration="duration"
+                indicator-color="#00bcd4"
+        >
             <block v-for="(item, utlindex) in imgUrls" :key="utlindex">
                 <swiper-item>
-                    <image :src="book.image"
+                    <img :src="book.image"
                            v-for="book in item"
                            :key="book.id"
                             @click="toDetail(book)"
                            class="slide-image"
-                           :mode="aspectFill"/>
+                           mode="aspectFill"/>
                 </swiper-item>
             </block>
         </swiper>
@@ -69,7 +75,7 @@
     margin-top 15rpx
     .slide-image
         width 30%
-        height 250rpx
+        height 100%
         margin 0 1.5%
 
 
