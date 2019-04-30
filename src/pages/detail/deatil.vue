@@ -1,13 +1,14 @@
 <template>
     <div>
-        <!--<detail-header :book="book"></detail-header>-->
         <detail-header :detailBook="detailBook"></detail-header>
+        <detail-content :detailBook="detailBook"></detail-content>
     </div>
 </template>
 
 <script>
   import { request } from '@/util'
   import detailHeader from './components/detailHeader'
+  import detailContent from './components/detailContent'
   export default {
     name: 'app',
     data () {
@@ -16,7 +17,8 @@
       }
     },
     components: {
-      detailHeader
+      detailHeader,
+      detailContent
     },
     methods: {
       async getDetail () {

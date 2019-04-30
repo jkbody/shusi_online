@@ -11,7 +11,8 @@ module.exports = async (ctx) => {
         // data: deatil[0]
         // 合并对象将原detail的user_info 覆盖
         data: Object.assign({}, deatil, {
-            tags: deatil.tags.split(','),
+            tags: deatil.tags.split(','), // 将字符按'，'分割成数组
+            summary: deatil.summary.split('\n'), // 将字符按换行符‘/n’，分割成数组
             user_info: {
                 name: info.nickName,
                 image: info.avatarUrl
