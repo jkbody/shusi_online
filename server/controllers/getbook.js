@@ -4,7 +4,6 @@ const {mysql} = require('../qcloud')
 // offset 起点  每页10个 页数*10 就是下次请求的获取的个数
 module.exports = async (ctx) => {
     const {page} = ctx.request.query
-    console.log(page)
     const size = 10
     const books = await mysql('books').select('books.*', 'csessioninfo.user_info').join('csessioninfo', 'books.open_id', 'csessioninfo.open_id').orderBy('books.id', 'desc').limit(size).offset(Number(page) * size)
     ctx.state.data = {

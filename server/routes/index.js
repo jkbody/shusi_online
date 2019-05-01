@@ -41,6 +41,10 @@ router.post('/addbook', controllers.addbook)
 router.get('/getbook', controllers.getbook)
 // 获取详情
 router.get('/detail', controllers.detail)
-// 获取详情
+// 图书的前9
 router.get('/gettop', controllers.gettop)
+// 增加评论
+router.post('/submitComment', controllers.submitComment)
+// router.get('/commentlist', controllers.commentlist)
+
 module.exports = router

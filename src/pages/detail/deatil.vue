@@ -2,6 +2,9 @@
     <div>
         <detail-header :detailBook="detailBook"></detail-header>
         <detail-content :detailBook="detailBook"></detail-content>
+        <Comment :detailBook="detailBook"
+                 :bookId="bookId"
+        ></Comment>
     </div>
 </template>
 
@@ -9,6 +12,7 @@
   import { request } from '@/util'
   import detailHeader from './components/detailHeader'
   import detailContent from './components/detailContent'
+  import Comment from './components/Comment'
   export default {
     name: 'app',
     data () {
@@ -18,7 +22,8 @@
     },
     components: {
       detailHeader,
-      detailContent
+      detailContent,
+      Comment
     },
     methods: {
       async getDetail () {

@@ -1,7 +1,7 @@
 <template>
-<div class="container">
+<div class="container border-bottom">
     <div
-            class="tag"
+            class="tag border-bottom"
         v-for="tag of detailBook.tags"
          :key="tag"
     >
@@ -18,7 +18,7 @@
     name: 'detailCeader',
     props: ['detailBook'],
     mounted () {
-      console.log(this.detailBook.summary)
+      // console.log(this.detailBook.summary)
     }
   }
 </script>

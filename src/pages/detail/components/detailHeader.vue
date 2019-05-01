@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container border-bottom">
     <div class="bg_img_wrap">
         <img :src="detailBook.image" alt="">
     </div>
