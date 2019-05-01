@@ -39,7 +39,7 @@
     data () {
       return {
         comment: '',
-        mapCtx: {},
+        mapCtx: '',
         local: '',
         phone: '',
         geo: {}
@@ -47,8 +47,9 @@
     },
     methods: {
       async getComments () {
+        console.log('发', this.bookId)
         const res = await request({
-          url: '/weapp/getComments',
+          url: '/weapp/commentlist',
           method: 'GET',
           data: {
             bookId: this.bookId
@@ -125,6 +126,9 @@
       }
     },
     mounted () {
+      this.mapCtx = wx.createMapContext('myMap')
+    },
+    onShow () {
       this.mapCtx = wx.createMapContext('myMap')
       this.getComments()
     }

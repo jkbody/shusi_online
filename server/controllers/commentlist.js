@@ -1,11 +1,8 @@
 const {mysql} = require('../qcloud')
-// orderBy 按books.id排序 desc  倒序
-// limit 数量
-// offset 起点  每页10个 页数*10 就是下次请求的获取的个数
-// module.exports = async (ctx) => {
-//     // const {bookId} = ctx.request.query.bookId
-//     // console.log(bookId)
-//     // const books = await mysql('comments').select('comments.*', 'csessioninfo.user_info').join('csessioninfo', 'comments.open_id', 'csessioninfo.open_id').where('comments.id', book_id)
+module.exports = async (ctx) => {
+    const {bookId} = ctx.request.query
+    const data = await mysql('comments').select('comments.*', 'csessioninfo.user_info').join('csessioninfo', 'comments.open_id', 'csessioninfo.open_id').where('comments.book_id', bookId)
+    console.log(data)
 //     // ctx.state.data = {
 //     //     books: books.map(v => { // 映射处理数组，展开数组遍历每一项
 //     //         const info = JSON.parse(v.user_info) // 将user_info转换成对象
@@ -17,4 +14,4 @@ const {mysql} = require('../qcloud')
 //     //         })
 //     //     })
 //     // }
-// }
+}

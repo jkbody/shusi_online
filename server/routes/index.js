@@ -45,6 +45,6 @@ router.get('/detail', controllers.detail)
 router.get('/gettop', controllers.gettop)
 // 增加评论
 router.post('/submitComment', controllers.submitComment)
-// router.get('/commentlist', controllers.commentlist)
+router.get('/commentlist', controllers.commentlist)
 
 module.exports = router
