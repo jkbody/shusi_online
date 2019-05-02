@@ -8,7 +8,7 @@
         "newFeature": true
     },
     "miniprogramRoot": "dist/wx/",
-    "qcloudRoot": "./server/"
+    "qcloudRoot": "./server/",
     "compileType": "miniprogram",
     "appid": "touristappid",
     "projectname": "mpvue_books",

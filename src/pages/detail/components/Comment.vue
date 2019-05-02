@@ -1,33 +1,49 @@
 <template>
     <div class="container">
-        <textarea class="comment"
-                  v-model="comment"
-                  placeholder="请输入评论"
-        ></textarea>
-        <div>
-            <div>
-                <div class="local">获取位置：
-                    <switch class="switch"
-                            color= "#00bcd4"
-                            :checked= "getGeo"
-                            type="primary"
-                            @change="getGeo"
-                    />
-                    <span class='text-primary'>{{local}}</span>
+        <div class="title">评论</div>
+        <div class="title">▼</div>
+        <div v-for="item of getComment.data"
+                 class="border-bottom"
+                 :key="item"
+            >
+                <div class="headImg"><img
+                        :src="item.user_info.image"
+                        alt="">
+                    <span>{{item.user_info.name}}</span>
                 </div>
-                <div>手机型号：
-                    <switch class="switch"
-                            color= "#00bcd4"
-                            :checked= "getPhone"
-                            type="primary"
-                            @change="getPhone"
-                    /> <span class='text-primary'>{{phone}}</span>
-                </div>
-                <map id="myMap" show-location />
+                <div class="comment">{{item.comment}}</div>
             </div>
-            <button @click="Submit">发表</button>
+        <div v-if="show">
+            <textarea class="addcomment"
+                      v-model="comment"
+                      placeholder="请输入评论"
+            ></textarea>
+            <div>
+                <div>
+                    <div class="local">获取位置：
+                        <switch class="switch"
+                                color= "#00bcd4"
+                                :checked= "getGeo"
+                                type="primary"
+                                @change="getGeo"
+                        />
+                        <span class='text-primary'>{{local||'未知地点'}}</span>
+                    </div>
+                    <div>手机型号：
+                        <switch class="switch"
+                                color= "#00bcd4"
+                                :checked= "getPhone"
+                                type="primary"
+                                @change="getPhone"
+                        /> <span class='text-primary'>{{phone||'未知设备'}}</span>
+                    </div>
+                    <map id="myMap" show-location />
+                </div>
+                <button @click="Submit">发表</button>
 
+            </div>
         </div>
+        <button @click="handleClick">测试</button>
     </div>
 </template>
 
@@ -35,15 +51,20 @@
   import {request, showModal} from '@/util'
   export default {
     name: 'Comment',
-    props: ['detailBook', 'bookId'],
+    props: ['detailBook'],
     data () {
       return {
+        bookId: '',
         comment: '',
         mapCtx: '',
         local: '',
         phone: '',
-        geo: {}
+        geo: {},
+        getComment: '',
+        show: true
       }
+    },
+    computed: {
     },
     methods: {
       async getComments () {
@@ -55,7 +76,18 @@
             bookId: this.bookId
           }
         })
-        console.log(res)
+        this.getComment = res
+        this.comments = res.data.comment
+        // this.show = this.getComment.data.open_id
+      },
+      async handleClick () {
+        console.log('show', this.show)
+        console.log('getComment', this.getComment)
+        console.log('data', this.getComment.data)
+        console.log('getStorageSync', wx.getStorageSync('userInfo').openId)
+        await this.getComments()
+        await this.Show()
+        // const Arr
       },
       async Submit () {
         if (this.comment) {
@@ -76,21 +108,22 @@
         } else {
           showModal('发表失败', '未添加评论')
         }
-
+        await this.getComments()
+        await this.Show()
         this.comment = ''
       },
-      getGeo (e) {
+      async getGeo (e) {
         if (e.target.value) {
-          this.getCenterLocation()
-          this.moveToLocation()
+          await this.getCenterLocation()
+          await this.moveToLocation()
         } else {
           // 没选中
           this.local = ''
         }
       },
-      getPhone (e) {
+      async getPhone (e) {
         if (e.target.value) {
-          wx.getSystemInfo({
+          await wx.getSystemInfo({
             success: res => {
               this.phone = res.model
             }
@@ -123,14 +156,36 @@
       },
       moveToLocation () {
         this.mapCtx.moveToLocation()
+      },
+      async Show () {
+        const arr = await this.getComment.data
+        const storyageOpenId = await wx.getStorageSync('userInfo').openId
+        console.log('arr是否存在', arr.length)
+        if (arr.length) { // 如果存在评论
+          arr.forEach((item, index) => {
+            console.log('遍历', item)
+            // console.log('open_id', storyageOpenId, item.open_id)
+            if (item.open_id === storyageOpenId) {
+              console.log('有这个open_id')
+              this.show = false
+            }
+          })
+        } else {
+          this.show = true
+        }
       }
     },
-    mounted () {
-      this.mapCtx = wx.createMapContext('myMap')
+    async mounted () {
+      this.mapCtx = await wx.createMapContext('myMap')
+      this.bookId = await this.$root.$mp.query.id
+      await this.getComments()
+      await this.Show()
     },
-    onShow () {
-      this.mapCtx = wx.createMapContext('myMap')
-      this.getComments()
+    async onShow () {
+      this.mapCtx = await wx.createMapContext('myMap')
+      this.bookId = await this.$root.$mp.query.id
+      await this.getComments()
+      await this.Show()
     }
   }
 </script>
@@ -147,7 +202,7 @@
 
         .switch
             zoom .7
-        .comment
+        .addcomment
             width 98%
             margin 15rpx  auto
             background #eee
@@ -156,5 +211,18 @@
             margin 15rpx auto
         span
             color #aaa
-
+        .title
+            text-align center
+            font-size 40rpx
+        .comment
+            padding 30rpx
+        .headImg
+            height 40rpx
+            line-height 40rpx
+            vertical-align: middle
+            margin-top 10rpx
+            img
+                border-radius 50%
+                width 40rpx
+                height 40rpx
 </style>

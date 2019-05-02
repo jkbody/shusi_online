@@ -26,6 +26,17 @@
       Comment
     },
     methods: {
+      async getComments () {
+        console.log('发', this.bookId)
+        const res = await request({
+          url: '/weapp/commentlist',
+          method: 'GET',
+          data: {
+            bookId: this.bookId
+          }
+        })
+        console.log(res)
+      },
       async getDetail () {
         const res = await request({
           url: '/weapp/detail',
@@ -46,10 +57,12 @@
       wx.showShareMenu({
         withShareTicket: true
       })
+      // this.getComments()
     },
     onShow () {
       this.bookId = this.$root.$mp.query.id
       this.getDetail()
+      // this.getComments()
     }
   }
 </script>
