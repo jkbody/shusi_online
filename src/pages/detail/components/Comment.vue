@@ -2,17 +2,7 @@
     <div class="container">
         <div class="title">评论</div>
         <div class="title">▼</div>
-        <div v-for="item of getComment.data"
-                 class="border-bottom"
-                 :key="item"
-            >
-                <div class="headImg"><img
-                        :src="item.user_info.image"
-                        alt="">
-                    <span>{{item.user_info.name}}</span>
-                </div>
-                <div class="comment">{{item.comment}}</div>
-            </div>
+        <comments-list :comments="getComment.data"></comments-list>
         <div v-if="show">
             <textarea class="addcomment"
                       v-model="comment"
@@ -49,9 +39,13 @@
 
 <script>
   import {request, showModal} from '@/util'
+  import commentsList from './commentsList'
   export default {
     name: 'Comment',
     props: ['detailBook'],
+    components: {
+      commentsList
+    },
     data () {
       return {
         bookId: '',
@@ -215,13 +209,4 @@
             font-size 40rpx
         .comment
             padding 30rpx
-        .headImg
-            height 40rpx
-            line-height 40rpx
-            vertical-align: middle
-            margin-top 10rpx
-            img
-                border-radius 50%
-                width 40rpx
-                height 40rpx
 </style>
