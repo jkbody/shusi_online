@@ -13,16 +13,21 @@
         openId: ''
       }
     },
-    async mounted () {
+    methods: {
+      async getallcomment () {
+        const res = await request({
+          method: 'GET',
+          url: '/weapp/commentlist',
+          data: {
+            openId: this.openId
+          }
+        })
+        console.log(res)
+      }
+    },
+    async onShow () {
       this.openId = await wx.getStorageSync('userInfo').openId
-      const res = await request({
-        method: 'GET',
-        url: '/weapp/commentlist',
-        data: {
-          openId: this.openId
-        }
-      })
-      console.log(res)
+      await this.getallcomment()
     }
   }
 </script>

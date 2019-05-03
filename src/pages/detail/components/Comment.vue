@@ -77,7 +77,6 @@
           }
         })
         this.getComment = res
-        this.comments = res.data.comment
         // this.show = this.getComment.data.open_id
       },
       async handleClick () {
