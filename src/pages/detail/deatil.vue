@@ -1,10 +1,21 @@
 <template>
-    <div>
-        <detail-header :detailBook="detailBook"></detail-header>
-        <detail-content :detailBook="detailBook"></detail-content>
-        <Comment :detailBook="detailBook"
-                 :bookId="bookId"
-        ></Comment>
+    <div class="container">
+        <div v-if="detailBook.title">
+            <detail-header :detailBook="detailBook"></detail-header>
+            <detail-content :detailBook="detailBook"></detail-content>
+            <div class="title">评论<br>▼</div>
+            <comments-list  :comments="getComment.data"></comments-list>
+            <div v-show="show">
+                <Comment
+                        :detailBook="detailBook"
+                        :getComment="getComment"
+                        :bookId="bookId"
+                ></Comment>
+            </div>
+            <foot :isbn="detailBook.isbn"
+                  :flag="initialFlag"
+            ></foot>
+        </div>
     </div>
 </template>
 
@@ -13,21 +24,29 @@
   import detailHeader from './components/detailHeader'
   import detailContent from './components/detailContent'
   import Comment from './components/Comment'
+  import commentsList from './components/commentsList'
+  import foot from './components/foot'
   export default {
     name: 'app',
     data () {
       return {
-        detailBook: {}
+        detailBook: {},
+        bookId: '',
+        getComment: {},
+        show: true,
+        storyAgeOpenId: '',
+        initialFlag: ''
       }
     },
     components: {
       detailHeader,
       detailContent,
-      Comment
+      Comment,
+      commentsList,
+      foot
     },
     methods: {
       async getComments () {
-        console.log('发', this.bookId)
         const res = await request({
           url: '/weapp/commentlist',
           method: 'GET',
@@ -35,7 +54,36 @@
             bookId: this.bookId
           }
         })
+        this.getComment = res
         console.log(res)
+      },
+      async getIsCollect () {
+        const res = await request({
+          url: '/weapp/getIsCollect',
+          method: 'GET',
+          data: {
+            isbn: this.detailBook.isbn,
+            openId: this.storyAgeOpenId
+          }
+        })
+        this.initialFlag = res.flag
+        console.log(res)
+      },
+      async Show () {
+        const arr = await this.getComment.data
+        // console.log('arr是否存在', arr.length)
+        if (arr.length) { // 如果存在评论
+          arr.forEach((item, index) => {
+            // console.log('遍历', item)
+            // console.log('open_id', storyageOpenId, item.open_id)
+            if (item.open_id === this.storyAgeOpenId) {
+              this.show = false
+              // console.log('有这个open_id,show:' + this.show)
+            }
+          })
+        } else {
+          this.show = true
+        }
       },
       async getDetail () {
         const res = await request({
@@ -53,20 +101,36 @@
         // console.log(this.detailBook)
       }
     },
+    computed: {
+    },
+    async onPullDownRefresh () {
+      await this.getDetail()
+      await this.getComments()
+      await this.Show()
+    },
     mounted () {
+      console.log('page mounted')
       wx.showShareMenu({
         withShareTicket: true
       })
-      // this.getComments()
     },
-    onShow () {
+    async onShow () {
       this.bookId = this.$root.$mp.query.id
-      this.getDetail()
-      // this.getComments()
+      this.storyAgeOpenId = await wx.getStorageSync('userInfo').openId
+      await this.getDetail()
+      await this.getComments()
+      await this.Show()
+      await this.getIsCollect()
     }
   }
 </script>
 
 <style lang="stylus" scoped>
+    .container
+        margin-bottom 90rpx
+        .title
+            margin-top 20rpx
+            text-align center
+            font-size 40rpx
 
 </style>

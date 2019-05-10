@@ -46,5 +46,9 @@ router.get('/gettop', controllers.gettop)
 // 增加评论
 router.post('/submitComment', controllers.submitComment)
 router.get('/commentlist', controllers.commentlist)
+// 点击收藏
+router.get('/getCollect', controllers.getCollect)
+// 获取是否收藏
+router.get('/getIsCollect', controllers.getIsCollect)
 
 module.exports = router

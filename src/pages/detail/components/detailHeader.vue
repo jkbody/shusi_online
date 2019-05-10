@@ -10,16 +10,16 @@
         <div class="title">{{detailBook.author}} ◆ {{detailBook.title}}</div>
     </div>
     <div class="text">
-        <div class="left">
-            <div class="headImg"
+        <div class="textContent">
+            <div class="left"
             ><img :src="detailBook.user_info.image"
                             mode="aspectFit"
                         alt=""> {{detailBook.user_info.name}}</div>
-            <p>{{detailBook.publisher}}</p>
+            <div class="right">{{detailBook.rate}} <star :rate="detailBook.rate"></star></div>
         </div>
-        <div class="right">
-            <p>{{detailBook.rate}} <star :rate="detailBook.rate"></star></p>
-            <p>¥{{detailBook.price}}</p>
+        <div class="textContent">
+            <div class="left">{{detailBook.publisher}}</div>
+            <div class="right">¥{{detailBook.price}}</div>
         </div>
     </div>
 </div>
@@ -44,6 +44,7 @@
     /*padding 2rpx*/
     width 100%
     position relative
+    margin-bottom 70rpx
     .bg_img_wrap
         width 100%
         height 0
@@ -72,18 +73,16 @@
     .text
         font-size 30rpx
         font-weight 600
-        padding 10rpx
-        display flex
-        p
+        padding 15rpx
+        .textContent
             margin-top 10rpx
-        .right
-            flex 1
-            text-align right
-        .left
-            .headImg
-                height 40rpx
-                line-height 40rpx
-                vertical-align: middle
+            display flex
+            align-items baseline
+            .right
+                flex 1
+                text-align right
+            .left
+                text-align left
                 img
                     border-radius 50%
                     width 40rpx

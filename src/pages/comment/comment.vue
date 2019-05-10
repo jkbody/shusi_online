@@ -1,19 +1,27 @@
+<!--suppress ALL -->
 <template>
     <div class="container">
-        <div class="title">评论</div>
-        <div class="title">▼</div>
-        <comments-list
-                :comments="getComment.data"
-        ></comments-list>
-        <div class="title">我上传的书</div>
-        <div class="title">▼</div>
-        <book-list
-                v-for="book of books"
-                :book="book"
-                :bookId="book.id"
-                :count="book.count"
-                :key="book.id"
-        ></book-list>
+        <div v-if="show">
+            <div class="title border-bottom">评论<br>▼</div>
+            <div v-if="!this.getComment.data.length" class="none">没有点评</div>
+            <comments-list
+                    :comments="getComment.data"
+            ></comments-list>
+            <div class="title">我上传的书</div>
+            <div class="title border-bottom">▼</div>
+            <div v-if="!books.length" class="none">没有上传书</div>
+            <book-list
+                    v-for="book of books"
+                    :book="book"
+                    :bookId="book.id"
+                    :count="book.count"
+                    :key="book.id"
+            ></book-list>
+        </div>
+        <div v-show="!show">
+            <div class="login">请登录</div>
+        </div>
+        <button @click="cc">test</button>
     </div>
 </template>
 <script>
@@ -28,6 +36,7 @@
     },
     data () {
       return {
+        show: false,
         openId: '',
         getComment: [],
         books: [],
@@ -36,6 +45,9 @@
       }
     },
     methods: {
+      cc () {
+        console.log(this.getComment.data.length)
+      },
       async getallcomment () {
         const res = await request({
           method: 'GET',
@@ -44,7 +56,7 @@
             openId: this.openId
           }
         })
-        console.log(res)
+        // console.log(res)
         this.getComment = res
       },
       async getallbooks (flag) { // 获取数据 flag 下拉是true 上啦是false
@@ -92,6 +104,12 @@
     },
     async onShow () {
       this.openId = await wx.getStorageSync('userInfo').openId
+      // this.show = this.openId ? this.show = true:this.show = false
+      if (this.openId) {
+        this.show = true
+      } else {
+        this.show = false
+      }
       await this.getallcomment()
       await this.getallbooks(true)
     }
@@ -99,7 +117,18 @@
 </script>
 
 <style lang="stylus" scoped>
-    .title
-        text-align center
-        font-size 40rpx
+    .container
+        .title
+            text-align center
+            font-size 40rpx
+        .login
+            text-align center
+            font-size 40rpx
+            color #aaa
+            display flex
+            flex-direction column
+            justify-content center
+        .none
+            text-align center
+            color #aaa
 </style>

@@ -3,7 +3,8 @@
     "pages/index/main",
     "pages/comment/main",
     "pages/me/main",
-    "pages/detail/main"
+    "pages/detail/main",
+    "pages/shoppingcart/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,11 +29,16 @@
       "iconPath": "static/img/todo.png",
       "selectedIconPath": "static/img/todo-active.png"
     },{
+      "text": "购物车",
+      "pagePath": "pages/shoppingcart/main",
+      "iconPath": "static/img/me.png",
+      "selectedIconPath": "static/img/me-active.png"
+    },{
       "text": "我",
       "pagePath": "pages/me/main",
       "iconPath": "static/img/me.png",
       "selectedIconPath": "static/img/me-active.png"
     }]
   },
-    "position": "bottom"
+  "position": "bottom"
 }

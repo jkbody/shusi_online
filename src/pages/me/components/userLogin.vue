@@ -1,15 +1,11 @@
 <template>
     <div class="userInfo">
         <button class="userLogin"
+                v-if="userInfo.avatarUrl"
                 open-type='getUserInfo'
                 @getuserinfo="doLogin"
                 :style="{backgroundImage:'url('+userInfo.avatarUrl+')'}"
         ></button>
-        <!--<button class="userLogin"-->
-                <!--open-type='getUserInfo'-->
-                <!--@getuserinfo="doLogin"-->
-                <!--:style="getUrl"-->
-        <!--&gt;</button>-->
         <p>{{userInfo.nickName}}</p>
     </div>
 </template>

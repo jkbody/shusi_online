@@ -1,9 +1,6 @@
 <template>
     <div class="container">
-        <div class="title">评论</div>
-        <div class="title">▼</div>
-        <comments-list :comments="getComment.data"></comments-list>
-        <div v-if="show">
+        <div v-show="show">
             <textarea class="addcomment"
                       v-model="comment"
                       placeholder="请输入评论"
@@ -39,23 +36,20 @@
 
 <script>
   import {request, showModal} from '@/util'
-  import commentsList from './commentsList'
   export default {
     name: 'Comment',
-    props: ['detailBook'],
+    props: ['detailBook', 'getComment', 'bookId'],
     components: {
-      commentsList
     },
     data () {
       return {
-        bookId: '',
+        show: true,
         comment: '',
         mapCtx: '',
         local: '',
         phone: '',
         geo: {},
-        getComment: '',
-        show: true
+        getComment: ''
       }
     },
     computed: {
@@ -76,10 +70,11 @@
       async handleClick () {
         console.log('show', this.show)
         console.log('getComment', this.getComment)
+        console.log('detailBook', this.detailBook)
         console.log('data', this.getComment.data)
         console.log('getStorageSync', wx.getStorageSync('userInfo').openId)
         await this.getComments()
-        await this.Show()
+        // await this.Show()
         // const Arr
       },
       async Submit () {
@@ -98,6 +93,7 @@
             data: data
           })
           console.log(res)
+          this.show = false
         } else {
           showModal('发表失败', '未添加评论')
         }
@@ -136,49 +132,36 @@
               url,
               data: {
                 key,
-                location: `116.480881,39.989410`,
+                // location: `116.480881,39.989410`,
+                location: `${res.longitude},${res.latitude}`,
                 output: 'json'
               },
               success (r) {
-                console.log('成功了')
+                // console.log('成功了')
                 _this.local = r.data.regeocode.formatted_address
               }
             })
+            // console.log(res)
           }
         })
       },
       moveToLocation () {
         this.mapCtx.moveToLocation()
-      },
-      async Show () {
-        const arr = await this.getComment.data
-        const storyageOpenId = await wx.getStorageSync('userInfo').openId
-        console.log('arr是否存在', arr.length)
-        if (arr.length) { // 如果存在评论
-          arr.forEach((item, index) => {
-            console.log('遍历', item)
-            // console.log('open_id', storyageOpenId, item.open_id)
-            if (item.open_id === storyageOpenId) {
-              console.log('有这个open_id')
-              this.show = false
-            }
-          })
-        } else {
-          this.show = true
-        }
       }
     },
     async mounted () {
-      this.mapCtx = await wx.createMapContext('myMap')
-      this.bookId = await this.$root.$mp.query.id
-      await this.getComments()
-      await this.Show()
+      // this.mapCtx = await wx.createMapContext('myMap')
+      // this.bookId = await this.$root.$mp.query.id
+      console.log(this.show)
     },
     async onShow () {
       this.mapCtx = await wx.createMapContext('myMap')
-      this.bookId = await this.$root.$mp.query.id
-      await this.getComments()
-      await this.Show()
+      // this.bookId = await this.$root.$mp.query.id
+      console.log(this.show)
+    },
+    onHide () {
+      this.local = ''
+      this.phone = ''
     }
   }
 </script>
@@ -204,9 +187,6 @@
             margin 15rpx auto
         span
             color #aaa
-        .title
-            text-align center
-            font-size 40rpx
         .comment
             padding 30rpx
 </style>
