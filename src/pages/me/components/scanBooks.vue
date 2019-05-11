@@ -6,7 +6,6 @@
         <img src="/static/img/scanCode.png" alt="">
         <p>扫码添加图书</p>
     </div>
-
 </template>
 
 <script>
@@ -39,7 +38,7 @@
       }
     },
     computed: {
-      ...mapState(['userInfo'])
+      ...mapState('login', ['userInfo'])
     }
   }
 </script>

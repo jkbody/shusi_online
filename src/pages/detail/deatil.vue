@@ -14,6 +14,7 @@
             </div>
             <foot :isbn="detailBook.isbn"
                   :flag="initialFlag"
+                  :detailBook="detailBook"
             ></foot>
         </div>
     </div>
@@ -26,6 +27,8 @@
   import Comment from './components/Comment'
   import commentsList from './components/commentsList'
   import foot from './components/foot'
+  import { mapMutations, mapState } from 'vuex'
+  import * as type from '@/store/shoppingCart/type'
   export default {
     name: 'app',
     data () {
@@ -46,6 +49,12 @@
       foot
     },
     methods: {
+      ...mapMutations('shoppingCart', {
+        setPrice: type.SET_PRICE,
+        setBookIsbn: type.SET_BOOK_ISBN,
+        setOpenId: type.SET_OPEN_ID,
+        resetCartData: type.RESET_CART_DATA
+      }),
       async getComments () {
         const res = await request({
           url: '/weapp/commentlist',
@@ -95,6 +104,8 @@
         })
         // this.detailBook = res.data[0]
         this.detailBook = res.data
+        this.setPrice(res.data.price)
+        console.log(this.data)
         wx.setNavigationBarTitle({
           title: this.detailBook.title
         })
@@ -102,6 +113,7 @@
       }
     },
     computed: {
+      ...mapState('shoppingCart', ['cartData'])
     },
     async onPullDownRefresh () {
       await this.getDetail()
@@ -121,6 +133,12 @@
       await this.getComments()
       await this.Show()
       await this.getIsCollect()
+      await this.setOpenId(this.storyAgeOpenId)
+      await this.setBookIsbn(this.detailBook.isbn)
+    },
+    onUnload () {
+      console.log('退出')
+      this.resetCartData()
     }
   }
 </script>

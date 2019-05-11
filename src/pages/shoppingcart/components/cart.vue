@@ -31,6 +31,9 @@
     },
     destroyed () {
       console.log('cart destroyed')
+    },
+    onHide () {
+      console.log('cart onHide')
     }
   }
 </script>

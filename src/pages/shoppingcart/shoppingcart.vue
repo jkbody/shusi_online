@@ -7,6 +7,7 @@
 
 <script>
   import Cart from './components/cart'
+  // import {mapState} from ''
   export default {
     name: 'shoppingcart',
     components: {
@@ -38,6 +39,9 @@
     },
     destroyed () {
       console.log('page destroyed')
+    },
+    onHide () {
+      console.log('page onHide')
     }
   }
 </script>

@@ -15,7 +15,7 @@
   import config from '@/config'
   import {showSuccess} from '@/util'
   import {mapState, mapMutations} from 'vuex'
-  import * as types from '@/store/mutation-type'
+  import * as types from '@/store/login/type'
   export default {
     name: 'userLogin',
     data () {
@@ -23,7 +23,7 @@
       }
     },
     methods: {
-      ...mapMutations({
+      ...mapMutations('login', {
         setUserInfo: types.SET_USERINFO
       }),
       doLogin (e) {
@@ -46,7 +46,7 @@
       }
     },
     computed: {
-      ...mapState(['userInfo']),
+      ...mapState('login', ['userInfo']),
       getUrl () {
         return `backgroundImage:url('${this.userInfo.avatarUrl}')`
       }
