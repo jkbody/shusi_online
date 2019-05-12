@@ -77,7 +77,7 @@
   import {request, showModal} from '@/util'
   import stapper from '@/pages/public_components/stepper'
   // import storeMouthodsName from '@/store/shoppingCart/storeMouthodsName'
-  import { mapGetters, mapState, mapMutations } from 'vuex'
+  import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
   import * as type from '@/store/shoppingCart/type'
   import * as cartTypes from '@/store/cart/cartTypes'
   export default {
@@ -109,21 +109,24 @@
         setTotalPrice: type.SET_TOTAL_PRICE
       }),
       ...mapMutations('cart', {
-        setGoodsCart: cartTypes.SET_GOODS_CART,
         pushCart: cartTypes.PUSH_CART
       }),
-      checkIsbn () {
-        return this.totalGoodsData.some((v) => {
-          if (v.isbn === this.detailBook.isbn) {
-            console.log('有这个isbn')
-            return true
-          }
-        })
-      },
+      ...mapActions('cart', {
+        setGoodsCart: cartTypes.SET_GOODS_CART
+      }),
       submitCart () {
-        const cartData = this.cartData
-        this.totalGoodsData.push(cartData)
-        console.log(cartData)
+        // await this.setOpenId(this.storyAgeOpenId)
+        // await this.setBookIsbn(this.detailBook.isbn)
+        const cartData = {
+          count: this.cartData.count,
+          price: this.cartData.price,
+          totalPrice: this.getTotalPrices,
+          isbn: this.detailBook.isbn,
+          open_id: this.openId
+        }
+        // console.log(cartData)
+        this.setGoodsCart(cartData)
+        // this.totalGoodsData.push(cartData)
         console.log(this.totalGoodsData)
         // if (this.totalGoodsData.length) {
         //   if (this.checkIsbn()) {
@@ -143,7 +146,7 @@
         // console.log('submitCart', this.totalGoodsData)
       },
       test () {
-        console.log('cartData', this.cartData.isbn, this.totalGoodsData[0].isbn)
+        console.log('cartData', this.cartData)
         // console.log('cartData', this.cartData)
         console.log('totalGoodsData', this.totalGoodsData)
       },
@@ -183,10 +186,10 @@
     },
     mounted () {
       console.log('设置total', this.getTotalPrices)
-      this.setTotalPrice(this.getTotalPrices)
     },
     onLoad () {
       console.log('onLoad')
+      this.setTotalPrice(this.getTotalPrices)
       this.openId = wx.getStorageSync('userInfo').openId
     },
     onUnload () {

@@ -20,9 +20,11 @@ const mutations = {
   },
   [type.SET_BOOK_ISBN] (state, isbn) {
     state.cartData.isbn = isbn
+    console.log('SET_TOTAL_PRICE', isbn)
   },
   [type.SET_OPEN_ID] (state, id) {
     state.cartData.open_id = id
+    console.log('SET_TOTAL_PRICE', id)
   },
   [type.RESET_CART_DATA] (state) {
     state.cartData.count = 1

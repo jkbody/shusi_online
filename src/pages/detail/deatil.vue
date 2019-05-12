@@ -133,8 +133,6 @@
       await this.getComments()
       await this.Show()
       await this.getIsCollect()
-      await this.setOpenId(this.storyAgeOpenId)
-      await this.setBookIsbn(this.detailBook.isbn)
     },
     onUnload () {
       console.log('退出')
