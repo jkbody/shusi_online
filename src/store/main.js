@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import login from './login'
+import cart from './cart'
 import shoppingCart from './shoppingCart'
 // import state from './login/state'
 // import mutations from './login/mutations'
@@ -13,6 +14,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     login,
+    cart,
     shoppingCart
   },
   // strict: debug, // 严格模式： 此模式下所有状态的变更且不是由mutation函数引起，将会抛出错误。

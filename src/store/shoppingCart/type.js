@@ -18,11 +18,6 @@ export const SET_BOOK_ISBN = 'SET_BOOK_ISBN'
 export const SET_OPEN_ID = 'SET_OPEN_ID'
 // 复位购物车数据
 export const RESET_CART_DATA = 'RESET_CART_DATA'
-// 加入购物车
-export const PUSH_CART = 'PUSH_CART'
-// 设置总购物车
-export const SET_GOODS_CART = 'SET_GOODS_CART'
-
 // getter-type
 
 // 获取总数

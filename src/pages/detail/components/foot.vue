@@ -79,6 +79,7 @@
   // import storeMouthodsName from '@/store/shoppingCart/storeMouthodsName'
   import { mapGetters, mapState, mapMutations } from 'vuex'
   import * as type from '@/store/shoppingCart/type'
+  import * as cartTypes from '@/store/cart/cartTypes'
   export default {
     name: 'foot',
     props: ['isbn', 'flag', 'detailBook'],
@@ -97,6 +98,7 @@
     },
     computed: {
       ...mapState('shoppingCart', ['cartData', 'totalGoodsData']),
+      ...mapState('cart', ['totalGoodsData']),
       ...mapGetters('shoppingCart', ['getTotalPrices']),
       hasGoods () {
         return this.cartData.count > 1
@@ -104,9 +106,11 @@
     },
     methods: {
       ...mapMutations('shoppingCart', {
-        setTotalPrice: type.SET_TOTAL_PRICE,
-        pushCart: type.PUSH_CART,
-        setGoodsCart: type.SET_GOODS_CART
+        setTotalPrice: type.SET_TOTAL_PRICE
+      }),
+      ...mapMutations('cart', {
+        setGoodsCart: cartTypes.SET_GOODS_CART,
+        pushCart: cartTypes.PUSH_CART
       }),
       checkIsbn () {
         return this.totalGoodsData.some((v) => {
@@ -117,25 +121,30 @@
         })
       },
       submitCart () {
-        if (this.totalGoodsData.length) {
-          if (this.checkIsbn()) {
-            this.setGoodsCart({
-              count: this.cartData.count,
-              totalPrice: this.getTotalPrices,
-              isbn: this.detailBook.isbn
-            })
-          } else {
-            this.pushCart(this.cartData)
-            console.log('没有这个isbn')
-          }
-        } else { // 数组是空的
-          this.pushCart(this.cartData)
-          console.log('数组是空的')
-        }
+        const cartData = this.cartData
+        this.totalGoodsData.push(cartData)
+        console.log(cartData)
+        console.log(this.totalGoodsData)
+        // if (this.totalGoodsData.length) {
+        //   if (this.checkIsbn()) {
+        //     this.setGoodsCart({
+        //       count: this.cartData.count,
+        //       totalPrice: this.getTotalPrices,
+        //       isbn: this.detailBook.isbn
+        //     })
+        //   } else {
+        //     this.pushCart(this.cartData)
+        //     console.log('没有这个isbn')
+        //   }
+        // } else { // 数组是空的
+        //   this.pushCart(this.cartData)
+        //   console.log('数组是空的')
+        // }
         // console.log('submitCart', this.totalGoodsData)
       },
       test () {
-        console.log('cartData', this.cartData)
+        console.log('cartData', this.cartData.isbn, this.totalGoodsData[0].isbn)
+        // console.log('cartData', this.cartData)
         console.log('totalGoodsData', this.totalGoodsData)
       },
       handleBay () {

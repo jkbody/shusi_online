@@ -1,6 +1,6 @@
 const getters = {
   getTotalCartLength: (state) => {
-    return state.totalGoodsData.cart.length
+    return state.carts.length
   },
   getTotalPrices: (state) => {
     return state.cartData.count * parseFloat(state.cartData.price)

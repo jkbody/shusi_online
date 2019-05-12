@@ -5,7 +5,6 @@ const state = {
     totalPrice: 0,
     isbn: '',
     open_id: ''
-  },
-  totalGoodsData: []
+  }
 }
 export default state
