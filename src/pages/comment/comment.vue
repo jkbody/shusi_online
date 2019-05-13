@@ -3,7 +3,7 @@
     <div class="container">
         <div v-if="show">
             <div class="title border-bottom">评论<br>▼</div>
-            <div v-if="!this.getComment.data.length" class="none">没有点评</div>
+            <div v-if="!getComment.data.length" class="none">没有点评</div>
             <comments-list
                     :comments="getComment.data"
             ></comments-list>

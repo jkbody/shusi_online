@@ -51,6 +51,14 @@ const mutations = {
     state.totalGoodsData.forEach(v => {
       if (v.flag) v.flag = false
     })
+  },
+  [type.REMOVE_SOME_CART] (state) {
+    state.totalGoodsData = state.totalGoodsData.filter(v => !v.flag)
+    // state.totalGoodsData.forEach((v, index, arr) => {
+    //   if (v.flag) {
+    //     arr.splice(index, 1)// 在删除的时候序号会乱，所以这样有漏网之鱼
+    //   }
+    // })
   }
 }
 export default mutations

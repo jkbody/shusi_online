@@ -2,7 +2,9 @@
     <div class="container border-top">
         <div class="content">
             <div class="item selectAll"
-                 @click="selectAll">
+                 :style="!totalGoodsData.length ? {height:0}:{height:80 + 'rpx'}"
+                 @click="selectAll"
+            >
                 <span class="all iconfont"
                       v-show="!flag"
                 >&#xebf0; </span>
@@ -12,14 +14,15 @@
                 <span v-show="flag"> 取消全选</span>
                 <span v-show="!flag"> 全 选</span>
             </div>
-            <div class="item editor"
-                 @click="tohome"
+            <div class="item delete cartHide"
+                 @click="removeSomeCarts"
+                 :style="!totalGoodsData.length ? {height:0}:{height:80 + 'rpx'}"
             >
                 <p>删 除</p>
             </div>
             <div class="item total"
             >
-                <p>合计：{{getCartTotalPrices||0}}</p>
+                <p>合计：{{getCartTotalPrices||0}} ¥</p>
             </div>
             <div class="item bay"
                  @click="handleBay"
@@ -53,7 +56,8 @@
       ...mapMutations('cart', {
         checkedFlag: cartTypes.SET_FLAG,
         setTrue: cartTypes.SET_ALL_FLAG_TRUE,
-        setFlase: cartTypes.SET_ALL_FLAG_FALSE
+        setFlase: cartTypes.SET_ALL_FLAG_FALSE,
+        removeSomeCarts: cartTypes.REMOVE_SOME_CART
       }),
       selectAll () {
         if (this.flag) {
@@ -100,16 +104,20 @@
         bottom 0
         height 80rpx
         border-bottom 5rpx solid #ccc
+        overflow hidden
         .content
+            overflow hidden
             display flex
             align-items center
             height 80rpx
             background rgb(250,250,250)
             .item
+                overflow hidden
                 text-align center
                 line-height 80rpx
-            .editor
+            .delete
                 width 15%
+                color #ff6e97
             .selectAll
                 width 25%
             .total

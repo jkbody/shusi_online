@@ -8,9 +8,9 @@
                      v-if="isCart"
                      @click="handleSelect"
                 >
-                    <div v-show="!flag">
+                    <div v-show="!thisCart.flag">
                         &#xebf0;</div>
-                    <div v-show="flag">
+                    <div v-show="thisCart.flag">
                         &#xebef;</div>
                 </div>
                 <div class="imgWrap"
@@ -105,9 +105,6 @@
           console.log('购物车里面没有')
           return 0
         }
-      },
-      flag () {
-        return this.thisCart.flag
       },
       cartItem () {
         if (this.hasGoodsCart()) {
