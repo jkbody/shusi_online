@@ -34,15 +34,24 @@
                         </div>
                         <!--<div>共计：{{price}}</div>-->
                         <!--<div v-if="cartData.price">共计：{{getTotalPrices}} 元</div>-->
-                        <div>共计：{{total}} 元</div>
+                        <div>共计：{{total||0}} 元</div>
                         <div>
                             <button
                                     v-show="!isCart"
+                                    class="add"
                                     @click="submitCart"
                                     size="mini"
                                     lang="zh_CN"
                                     hover-class="btnAct"
                             >确定</button>
+                            <button
+                                    v-show="isCart"
+                                    class="de"
+                                    @click="deleteCart"
+                                    size="mini"
+                                    lang="zh_CN"
+                                    hover-class="cartBtnAct"
+                            >删除</button>
                         </div>
                     </div>
                 </div>
@@ -59,7 +68,7 @@
   import * as cartTypes from '@/store/cart/cartTypes'
   export default {
     name: 'foot',
-    props: ['isbn', 'showShop', 'detailBook'],
+    props: ['index', 'showShop', 'detailBook'],
     components: {
       stapper
     },
@@ -117,11 +126,16 @@
       ...mapMutations('cart', {
         cartAdd: cartTypes.SET_COUNT_ADD,
         cartMinus: cartTypes.SET_COUNT_MINUS,
-        pushCart: cartTypes.PUSH_CART
+        pushCart: cartTypes.PUSH_CART,
+        removeCart: cartTypes.REMOVE_CART
       }),
       ...mapActions('cart', {
         setGoodsCart: cartTypes.SET_GOODS_CART
       }),
+      deleteCart () {
+        console.log(this.index)
+        this.removeCart(this.index)
+      },
       hasGoodsCart () {
         return this.totalGoodsData.some(item => {
           return item.isbn === this.detailBook.isbn
@@ -131,7 +145,7 @@
         const cartData = {
           count: this.cartData.count,
           price: this.cartData.price,
-          totalPrice: this.getTotalPrices,
+          totalPrice: this.cartData.totalPrice,
           isbn: this.detailBook.isbn,
           open_id: this.openId,
           detailBook: this.detailBook
@@ -232,11 +246,16 @@
             .price
                 text-align right
                 float right
-                button
+                .add
                     background $bgcolor
+                    color #eee
+                .de
+                    background #ff6e97
                     color #eee
                 .btnAct
                     background rgb(0,178,202)
+                .cartBtnAct
+                    background #c1194e
                 /*stepper容器*/
                 .stepper {
                     border: 1px solid #ccc;

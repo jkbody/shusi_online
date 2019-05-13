@@ -13,3 +13,5 @@ export const SET_COUNT = 'SET_COUNT'
 export const SET_COUNT_ADD = 'SET_COUNT_ADD'
 // 设置数量 减
 export const SET_COUNT_MINUS = 'SET_COUNT_MINUS'
+// remove
+export const REMOVE_CART = 'REMOVE_CART'

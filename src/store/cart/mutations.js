@@ -5,7 +5,7 @@ const mutations = {
     state.totalGoodsData.find((item) => {
       if (item.isbn === obj.isbn) {
         item.count++
-        item.totalPrice = item.count * parseInt(item.price)
+        item.totalPrice = item.count * parseFloat(item.price)
       }
     })
   },
@@ -17,7 +17,7 @@ const mutations = {
         } else {
           item.count = 1
         }
-        item.totalPrice = item.count * parseInt(item.price)
+        item.totalPrice = item.count * parseFloat(item.price)
       }
     })
   },
@@ -31,6 +31,9 @@ const mutations = {
         v.totalPrice = obj.totalPrice
       }
     })
+  },
+  [type.REMOVE_CART] (state, index) {
+    state.totalGoodsData.splice(parseInt(index), 1)
   }
 }
 export default mutations
