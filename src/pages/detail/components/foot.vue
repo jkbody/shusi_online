@@ -1,40 +1,9 @@
 <template>
     <div class="container">
-        <div class="cart border-bottom"
-             v-show="showShop"
-        >
-            <div class="cartContent">
-                <div class="imgWrap"
-                    @click="test"
-                >
-                    <img :src="detailBook.image"
-                         mode="aspectFit"
-                         alt="">
-                </div>
-                <div class="text">
-                    <div class="detail">
-                        <div>{{detailBook.title}}</div>
-                        <div>{{detailBook.author}}</div>
-                    </div>
-                    <div class="price">
-                        <div>{{detailBook.price}}</div>
-                        <div>
-                            <stapper></stapper>
-                        </div>
-                        <!--<div>共计：{{price}}</div>-->
-                        <!--<div v-if="cartData.price">共计：{{getTotalPrices}} 元</div>-->
-                        <div>共计：{{getTotalPrices}} 元</div>
-                        <div>
-                            <button
-                                    @click="submitCart"
-                                    size="mini"
-                                    lang="zh_CN"
-                                    hover-class="btnAct"
-                            >确定</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="cartContainer">
+            <cart :detailBook="detailBook"
+                  :showShop="showShop"
+            ></cart>
         </div>
         <div class="content">
             <div class="item home"
@@ -75,83 +44,31 @@
 
 <script>
   import {request, showModal} from '@/util'
-  import stapper from '@/pages/public_components/stepper'
+  import cart from '@/pages/public_components/cart'
   // import storeMouthodsName from '@/store/shoppingCart/storeMouthodsName'
-  import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-  import * as type from '@/store/shoppingCart/type'
-  import * as cartTypes from '@/store/cart/cartTypes'
+  import { mapState } from 'vuex'
   export default {
     name: 'foot',
     props: ['isbn', 'flag', 'detailBook'],
     components: {
-      stapper
+      cart
     },
     watch: {
     },
     data () {
       return {
         showShop: false,
-        price: 0,
-        totalPrice: 0,
         openId: ''
       }
     },
     computed: {
-      ...mapState('shoppingCart', ['cartData', 'totalGoodsData']),
-      ...mapState('cart', ['totalGoodsData']),
-      ...mapGetters('shoppingCart', ['getTotalPrices']),
+      ...mapState('shoppingCart', ['cartData']),
       hasGoods () {
         return this.cartData.count > 1
       }
     },
     methods: {
-      ...mapMutations('shoppingCart', {
-        setTotalPrice: type.SET_TOTAL_PRICE
-      }),
-      ...mapMutations('cart', {
-        pushCart: cartTypes.PUSH_CART
-      }),
-      ...mapActions('cart', {
-        setGoodsCart: cartTypes.SET_GOODS_CART
-      }),
-      submitCart () {
-        // await this.setOpenId(this.storyAgeOpenId)
-        // await this.setBookIsbn(this.detailBook.isbn)
-        const cartData = {
-          count: this.cartData.count,
-          price: this.cartData.price,
-          totalPrice: this.getTotalPrices,
-          isbn: this.detailBook.isbn,
-          open_id: this.openId
-        }
-        // console.log(cartData)
-        this.setGoodsCart(cartData)
-        // this.totalGoodsData.push(cartData)
-        console.log(this.totalGoodsData)
-        // if (this.totalGoodsData.length) {
-        //   if (this.checkIsbn()) {
-        //     this.setGoodsCart({
-        //       count: this.cartData.count,
-        //       totalPrice: this.getTotalPrices,
-        //       isbn: this.detailBook.isbn
-        //     })
-        //   } else {
-        //     this.pushCart(this.cartData)
-        //     console.log('没有这个isbn')
-        //   }
-        // } else { // 数组是空的
-        //   this.pushCart(this.cartData)
-        //   console.log('数组是空的')
-        // }
-        // console.log('submitCart', this.totalGoodsData)
-      },
-      test () {
-        console.log('cartData', this.cartData)
-        // console.log('cartData', this.cartData)
-        console.log('totalGoodsData', this.totalGoodsData)
-      },
       handleBay () {
-        console.log('flag', this.flag)
       },
       tohome () {
         wx.switchTab({
@@ -172,7 +89,7 @@
             method: 'GET',
             data: {
               openId: this.openId,
-              isbn: this.isbn
+              isbn: this.detailBook.isbn
             }
           })
           this.flag = res.flag
@@ -189,7 +106,7 @@
     },
     onLoad () {
       console.log('onLoad')
-      this.setTotalPrice(this.getTotalPrices)
+      // this.setTotalPrice(this.getTotalPrices)
       this.openId = wx.getStorageSync('userInfo').openId
     },
     onUnload () {
@@ -200,55 +117,26 @@
 
 <style lang="stylus" scoped>
 .container
+    overflow hidden
     font-size 25rpx
+    color #333
     position fixed
     left 0
     right 0
     bottom 0
-    height (h+90)
-    color #333
-    border 1px solid #ccc
-    .cart
+    height 442rpx
+    display flex
+    flex-direction column
+    .cartContainer
+        /*bottom 90rpx*/
+        flex 1
         border-radius  10rpx 10rpx 0 0
-        width 96%
-        height h=300rpx
-        background rgb(253,253,253)
+        width 100%
         border none
-        padding 2%
-        /*overflow hidden*/
-        .cartContent
-            display flex
-            align-items start
-            .imgWrap
-                top 0
-                width 25%
-                img
-                    top 0
-                    width 100%
-                    height h
-            .text
-                flex 1
-                width 71%
-                display flex
-                div
-                    margin-top 20rpx
-                .detail
-                    flex 1
-                    margin-left 10%
-                    float left
-                    text-align left
-                    padding-right 3%
-                .price
-                    text-align right
-                    float right
-                    button
-                        background $bgcolor
-                        color #eee
-                    .btnAct
-                        background rgb(0,178,202)
     .content
+        border 1px solid #ccc
         padding-top 15rpx
-        height 100%
+        height 90rpx
         display flex
         background rgb(250,250,250)
         .item

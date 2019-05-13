@@ -12,8 +12,7 @@
                         :bookId="bookId"
                 ></Comment>
             </div>
-            <foot :isbn="detailBook.isbn"
-                  :flag="initialFlag"
+            <foot :flag="initialFlag"
                   :detailBook="detailBook"
             ></foot>
         </div>

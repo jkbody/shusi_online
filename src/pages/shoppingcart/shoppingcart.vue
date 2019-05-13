@@ -1,51 +1,35 @@
 <template>
-    <div>
-        <div>shoppingcart</div>
-        <Cart></Cart>
+    <div class="container">
+        <div v-for="cart of totalGoodsData"
+             :key="cart.isbn"
+             class="item"
+        >
+            <cart :detailBook="cart.detailBook"
+                  :showShop = 'true'
+            ></cart>
+        </div>
     </div>
 </template>
 
 <script>
-  import Cart from './components/cart'
-  // import {mapState} from ''
+  import cart from '@/pages/public_components/cart'
+  import {mapState} from 'vuex'
   export default {
     name: 'shoppingcart',
     components: {
-      Cart
+      cart
     },
-    beforeCreate () {
-      console.log('page beforeCreate')
-    },
-    created () {
-      console.log('page created')
-    },
-    onLoad () {
-      console.log('page onLoad')
-    },
-    onShow () {
-      console.log('page onShow')
-    },
-    onReady () {
-      console.log('page onReady')
-    },
-    beforeMount () {
-      console.log('page beforeMount')
-    },
-    mounted () {
-      console.log('page mounted')
-    },
-    beforeDestroy () {
-      console.log('page beforeDestroy')
-    },
-    destroyed () {
-      console.log('page destroyed')
-    },
-    onHide () {
-      console.log('page onHide')
+    computed: {
+      ...mapState('cart', ['totalGoodsData'])
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-
+    .container
+        font-size 25rpx
+        color #333
+        padding 2%
+        .item
+            margin-top 10rpx
 </style>

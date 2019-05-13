@@ -3,6 +3,7 @@ import * as type from './type'
 const mutations = {
   [type.SET_COUNT_ADD] (state) {
     state.cartData.count++
+    state.cartData.totalPrice = state.cartData.count * parseInt(state.cartData.price)
   },
   [type.SET_COUNT_MINUS] (state) {
     if (state.cartData.count > 1) {
@@ -10,6 +11,7 @@ const mutations = {
     } else {
       state.cartData.count = 1
     }
+    state.cartData.totalPrice = state.cartData.count * parseInt(state.cartData.price)
   },
   [type.SET_PRICE] (state, price) {
     state.cartData.price = price
