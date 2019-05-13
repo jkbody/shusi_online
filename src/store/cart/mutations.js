@@ -9,6 +9,13 @@ const mutations = {
       }
     })
   },
+  [type.SET_FLAG] (state, obj) {
+    state.totalGoodsData.find((item) => {
+      if (item.isbn === obj.isbn) {
+        item.flag = !item.flag
+      }
+    })
+  },
   [type.SET_COUNT_MINUS] (state, obj) {
     state.totalGoodsData.find((item) => {
       if (item.isbn === obj.isbn) {
@@ -34,6 +41,16 @@ const mutations = {
   },
   [type.REMOVE_CART] (state, index) {
     state.totalGoodsData.splice(parseInt(index), 1)
+  },
+  [type.SET_ALL_FLAG_TRUE] (state) {
+    state.totalGoodsData.forEach(v => {
+      if (!v.flag) v.flag = true
+    })
+  },
+  [type.SET_ALL_FLAG_FALSE] (state) {
+    state.totalGoodsData.forEach(v => {
+      if (v.flag) v.flag = false
+    })
   }
 }
 export default mutations

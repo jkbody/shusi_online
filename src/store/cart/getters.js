@@ -6,6 +6,16 @@ const getters = {
       }
     })
     // return 1
+  },
+  getCartTotalPrices: (state) => {
+    let count = 0
+    state.totalGoodsData.forEach(v => {
+      if (v.flag) {
+        count += parseFloat(v.totalPrice)
+      }
+    })
+    // console.log(count)
+    return count
   }
 }
 export default getters

@@ -15,3 +15,9 @@ export const SET_COUNT_ADD = 'SET_COUNT_ADD'
 export const SET_COUNT_MINUS = 'SET_COUNT_MINUS'
 // remove
 export const REMOVE_CART = 'REMOVE_CART'
+// 设置选择按钮
+export const SET_FLAG = 'SET_FLAG'
+// 全选
+export const SET_ALL_FLAG_TRUE = 'SET_ALL_FLAG_TRUE'
+// 全不选
+export const SET_ALL_FLAG_FALSE = 'SET_ALL_FLAG_FALSE '

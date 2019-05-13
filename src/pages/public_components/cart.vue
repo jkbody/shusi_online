@@ -4,6 +4,15 @@
              v-show="showShop"
         >
             <div class="cartContent">
+                <div class="select iconfont"
+                     v-if="isCart"
+                     @click="handleSelect"
+                >
+                    <div v-show="!flag">
+                        &#xebf0;</div>
+                    <div v-show="flag">
+                        &#xebef;</div>
+                </div>
                 <div class="imgWrap"
                      @click="test"
                 >
@@ -61,7 +70,6 @@
 </template>
 
 <script>
-  import stapper from '@/pages/public_components/stepper'
   // import storeMouthodsName from '@/store/shoppingCart/storeMouthodsName'
   import { mapState, mapMutations, mapActions } from 'vuex'
   import * as type from '@/store/shoppingCart/type'
@@ -69,9 +77,6 @@
   export default {
     name: 'foot',
     props: ['index', 'showShop', 'detailBook'],
-    components: {
-      stapper
-    },
     watch: {
     },
     data () {
@@ -101,6 +106,9 @@
           return 0
         }
       },
+      flag () {
+        return this.thisCart.flag
+      },
       cartItem () {
         if (this.hasGoodsCart()) {
           return this.thisCart.count
@@ -127,11 +135,15 @@
         cartAdd: cartTypes.SET_COUNT_ADD,
         cartMinus: cartTypes.SET_COUNT_MINUS,
         pushCart: cartTypes.PUSH_CART,
-        removeCart: cartTypes.REMOVE_CART
+        removeCart: cartTypes.REMOVE_CART,
+        checkedFlag: cartTypes.SET_FLAG
       }),
       ...mapActions('cart', {
         setGoodsCart: cartTypes.SET_GOODS_CART
       }),
+      handleSelect () {
+        this.checkedFlag(this.thisCart)
+      },
       deleteCart () {
         console.log(this.index)
         this.removeCart(this.index)
@@ -148,7 +160,8 @@
           totalPrice: this.cartData.totalPrice,
           isbn: this.detailBook.isbn,
           open_id: this.openId,
-          detailBook: this.detailBook
+          detailBook: this.detailBook,
+          flag: true
         }
         this.setGoodsCart(cartData)
         console.log(this.totalGoodsData)
@@ -221,6 +234,9 @@
     .cartContent
         display flex
         align-items start
+        .select
+            width 7%
+            color $bgcolor
         .imgWrap
             top 0
             width 25%

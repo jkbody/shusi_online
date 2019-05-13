@@ -20,19 +20,26 @@
                 v-show="totalGoodsData.length>1"
                 class="none"
         >没有更多</div>
-        <!--<foot></foot>-->
+        <foot></foot>
     </div>
 </template>
 
 <script>
   import cart from '@/pages/public_components/cart'
-  // import foot from '@/pages/public_components/foot'
+  import foot from './components/foot'
   import {mapState} from 'vuex'
   export default {
     name: 'shoppingcart',
+    data () {
+      return {
+        flag: true
+      }
+    },
+    methods: {
+    },
     components: {
-      cart
-      // foot
+      cart,
+      foot
     },
     computed: {
       ...mapState('cart', ['totalGoodsData'])
@@ -51,7 +58,6 @@
             margin-top 20rpx
             div
                 margin-top 20rpx
-
         .item
             margin-top 10rpx
 </style>
