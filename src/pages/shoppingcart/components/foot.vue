@@ -41,6 +41,7 @@
 <script>
   import { mapState, mapMutations, mapGetters } from 'vuex'
   import * as cartTypes from '@/store/cart/cartTypes'
+  import {showModal} from '@/util'
   export default {
     name: 'foot',
     data () {
@@ -52,7 +53,7 @@
     },
     computed: {
       ...mapState('cart', ['totalGoodsData']),
-      ...mapGetters('cart', ['getCartTotalPrices']),
+      ...mapGetters('cart', ['getCartTotalPrices', 'hasCarts']),
       flag () {
         return this.totalGoodsData.every(v => {
           return v.flag === true
@@ -85,9 +86,12 @@
         })
       },
       handleBay () {
-        console.log('click')
-        return this.$emit('countHide')
-        // console.log(typeof this.totalGoodsData[0].totalPrice)
+        if (this.hasCarts) {
+          console.log('click')
+          return this.$emit('countHide')
+        } else {
+          showModal('支付失败', '购物车是空的')
+        }
       }
     },
     onShow () {

@@ -30,7 +30,7 @@
 
             </div>
         </div>
-        <button @click="handleClick">测试</button>
+        <!--<button @click="handleClick">测试</button>-->
     </div>
 </template>
 

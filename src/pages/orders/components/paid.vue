@@ -12,12 +12,11 @@
                         >已经支付</div>
                     </div>
                     <div class="select iconfont"
-                         v-if="true"
-                         @click="handleSelect"
+                         @click="handleSelect(order.id)"
                     >
-                        <div v-show="true">
+                        <div v-show="!order.selectFlag">
                             &#xebf0;</div>
-                        <div v-show="false">
+                        <div v-show="order.selectFlag">
                             &#xebef;</div>
                     </div>
                 </div>
@@ -53,34 +52,35 @@
         </div>
         <div class="footContainer">
             <div class="footContent"
+                 v-show="paid"
             >
                 <div class="item selectAll"
                      :class="height0"
                      @click="selectAll"
                 >
                     <span class="all active iconfont"
-                          v-show="true"
+                          v-show="showSelectAll"
                     >&#xebef; </span>
                     <span class="all iconfont"
-                          v-show="false"
+                          v-show="!showSelectAll"
                     >&#xebf0; </span>
-                    <span v-show="true"> 取消全选</span>
-                    <span v-show="false"> 全 选</span>
+                    <span v-show="showSelectAll"> 取消全选</span>
+                    <span v-show="!showSelectAll"> 全 选</span>
                 </div>
                 <div class="item delete cartHide"
                      @click="removeSomeCarts"
                      :class="height0"
                 >
-                    <p>删 除</p>
+                    <!--<p>删 除</p>-->
                 </div>
                 <div class="item total"
                 >
-                    <p>合计：{{0}} ¥</p>
+                    <!--<p>合计：{{0}} ¥</p>-->
                 </div>
                 <div class="item bay"
-                     @click="handleBay"
+                     @click="handleClear"
                 >
-                    <p>结 算</p>
+                    <p>清 除</p>
                 </div>
             </div>
         </div>
@@ -88,35 +88,69 @@
 </template>
 
 <script>
-  import {request} from '@/util'
-
+  import { mapState, mapMutations, mapGetters } from 'vuex'
+  import * as type from '@/store/orders/orderTypes'
+  import {request, showModal} from '@/util'
   export default {
     name: 'orders',
     data () {
       return {
-        paid: '',
-        openId: '',
-        orders: []
+        paid: ''
+        // openId: '',
       }
     },
+    computed: {
+      ...mapState('orders', {
+        orders: 'vuexOrders'
+      }),
+      ...mapGetters('orders', ['showSelectAll', 'getTureId', 'hasOrder', 'showSelectAll', 'getSubData', 'getCartTotalPrices'])
+    },
     methods: {
-      async getOrders () {
+      ...mapMutations('orders', {
+        setFlag: type.SET_FLAG,
+        setAllFlagFlase: type.SET_ALL_FLAG_FALSE,
+        setAllFlagTrue: type.SET_ALL_FLAG_TRUE,
+        removeOrders: type.REMOVE_FLAG_TRUE_CART
+      }),
+      handleSelect (id) {
+        this.setFlag(id)
+      },
+      selectAll () {
+        if (this.showSelectAll) {
+          this.setAllFlagFlase()
+          console.log(this.showSelectAll, '取消全选')
+        } else {
+          this.setAllFlagTrue()
+          console.log(this.showSelectAll, '全选')
+        }
+      },
+      async mysqlRemoveSomeOrders (id) {
+        const openId = await wx.getStorageSync('userInfo').openId
         const res = await request({
-          method: 'GET',
-          url: '/weapp/getOrders',
+          method: 'POST',
+          url: '/weapp/removeSomeOrders',
           data: {
-            pay: this.paid,
-            openId: this.openId
+            idArr: id,
+            openId
           }
         })
-        console.log(res.data.data)
-        this.orders = res.data.data
+        console.log(res)
+      },
+      async handleClear () {
+        if (this.hasOrder) {
+          await console.log(this.getTureId)
+          await this.mysqlRemoveSomeOrders(this.getTureId)
+          await this.removeOrders()
+        } else {
+          showModal('清楚失败', '请选择')
+        }
       }
     },
     async onLoad () {
       this.paid = await parseInt(this.$root.$mp.query.pay)
-      this.openId = await wx.getStorageSync('userInfo').openId
-      await this.getOrders()
+      // this.openId = await wx.getStorageSync('userInfo').openId
+      // await this.getOrders()
+      console.log(this.orders)
     }
   }
 </script>

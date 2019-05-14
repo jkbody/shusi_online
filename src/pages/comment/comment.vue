@@ -1,27 +1,29 @@
 <!--suppress ALL -->
 <template>
     <div class="container">
-        <div v-if="show">
-            <div class="title">我上传的书</div>
-            <div class="title border-bottom">▼</div>
-            <div v-if="!books.length" class="none">没有上传书</div>
-            <book-list
-                    v-for="book of books"
-                    :book="book"
-                    :bookId="book.id"
-                    :count="book.count"
-                    :key="book.id"
-            ></book-list>
-        </div>
+        <div v-if="openId">
+            <div>
+                <div class="title">我上传的书</div>
+                <div class="title border-bottom">▼</div>
+                <div v-if="!books.length" class="none">没有上传书</div>
+                <book-list
+                        v-for="book of books"
+                        :book="book"
+                        :bookId="book.id"
+                        :count="book.count"
+                        :key="book.id"
+                ></book-list>
+            </div>
             <div class="title border-bottom">评论<br>▼</div>
-            <div v-if="!getComment.data.length" class="none">没有点评</div>
             <comments-list
                     :comments="getComment.data"
             ></comments-list>
-        <div v-show="!show">
+            <div class="none">没有更多评论</div>
+        </div>
+        <div v-show="!openId">
             <div class="login">请登录</div>
         </div>
-        <button @click="cc">test</button>
+        <!--<button @click="cc">test</button>-->
     </div>
 </template>
 <script>
@@ -38,11 +40,13 @@
       return {
         show: false,
         openId: '',
-        getComment: [],
+        getComment: {},
         books: [],
         page: 0,
         end: false
       }
+    },
+    computed: {
     },
     methods: {
       cc () {
@@ -104,12 +108,6 @@
     },
     async onShow () {
       this.openId = await wx.getStorageSync('userInfo').openId
-      // this.show = this.openId ? this.show = true:this.show = false
-      if (this.openId) {
-        this.show = true
-      } else {
-        this.show = false
-      }
       await this.getallcomment()
       await this.getallbooks(true)
     }
@@ -121,15 +119,14 @@
         .title
             color #aaa
             text-align center
-            font-size 40rpx
+            font-size 30rpx
         .login
             text-align center
+            margin-top 50%
+            color #ccc
             font-size 40rpx
-            color #aaa
-            display flex
-            flex-direction column
-            justify-content center
         .none
             color #aaa
+            font-size 30rpx
             text-align center
 </style>

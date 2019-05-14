@@ -54,4 +54,8 @@ router.get('/getIsCollect', controllers.getIsCollect)
 router.post('/submitOrder', controllers.submitOrder)
 // 获取订单
 router.get('/getOrders', controllers.getOrders)
+// 删除指定
+router.post('/removeSomeOrders', controllers.removeSomeOrders)
+// 更新指定订单
+router.post('/upOrders', controllers.upOrders)
 module.exports = router

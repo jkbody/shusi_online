@@ -1,6 +1,6 @@
 // 配置项
 
-const host = 'http://localhost:5757'
+const host = 'http://localhost:5858'
 const loginUrl = host + '/weapp/login'
 
 const config = {

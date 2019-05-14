@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <div v-if="detailBook.title">
+        <div v-if="detailBook.title"
+        >
             <detail-header :detailBook="detailBook"></detail-header>
             <detail-content :detailBook="detailBook"></detail-content>
             <div class="title">评论<br>▼</div>

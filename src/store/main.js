@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import login from './login'
 import cart from './cart'
 import shoppingCart from './shoppingCart'
+import orders from './orders'
 // import state from './login/state'
 // import mutations from './login/mutations'
 import createLogger from 'vuex/dist/logger'// <---- 打印Log信息
@@ -15,7 +16,8 @@ export default new Vuex.Store({
   modules: {
     login,
     cart,
-    shoppingCart
+    shoppingCart,
+    orders
   },
   // strict: debug, // 严格模式： 此模式下所有状态的变更且不是由mutation函数引起，将会抛出错误。
   plugins: debug ? [createLogger(), createPersistedState({

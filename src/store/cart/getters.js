@@ -19,6 +19,10 @@ const getters = {
   },
   getSubData: (state) => {
     return state.totalGoodsData.filter(v => v.flag)
+  },
+  hasCarts: (state) => {
+    console.log(state.totalGoodsData)
+    return state.totalGoodsData.some(v => v.flag)
   }
 }
 export default getters

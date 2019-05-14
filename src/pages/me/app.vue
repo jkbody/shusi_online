@@ -6,7 +6,7 @@
             <div class="scan">
                 <scan-books></scan-books>
             </div>
-            <div class="orders">
+            <div class="orders" v-show="userInfo.openId">
                 <orders></orders>
             </div>
         </div>
@@ -19,14 +19,26 @@ import userLogin from './components/userLogin'
 import scanBooks from './components/scanBooks'
 import orders from './components/orders'
 // import vuexTest from './components/vuexTest'
+import {mapState} from 'vuex'
 export default {
   name: 'booksIndex',
+  data () {
+    return {
+      openId: ''
+    }
+  },
+  computed: {
+    ...mapState('login', ['userInfo'])
+  },
   components: {
     yearProgress,
     userLogin,
     scanBooks,
     orders
     // vuexTest
+  },
+  onShow () {
+    // this.openId = wx.getStorageSync('userInfo').openId
   },
   created () {
     // canIUse: wx.canIUse('button.open-type.getUserInfo')
