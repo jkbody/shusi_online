@@ -46,10 +46,12 @@
 <style lang="stylus" scoped>
     .container
         text-align center
+        font-size 30rpx
+        color #ccc
         img
             overflow hidden
             display block
-            width 300rpx
-            height 300rpx
+            width 150rpx
+            height 150rpx
             margin 20rpx auto
 </style>

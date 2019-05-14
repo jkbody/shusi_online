@@ -52,4 +52,6 @@ router.get('/getCollect', controllers.getCollect)
 router.get('/getIsCollect', controllers.getIsCollect)
 // 增加订单
 router.post('/submitOrder', controllers.submitOrder)
+// 获取订单
+router.get('/getOrders', controllers.getOrders)
 module.exports = router

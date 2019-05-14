@@ -28,7 +28,9 @@
             </div>
             <foot @countHide="contentHide"></foot>
         </div>
-        <div class="option">
+        <div class="option"
+             v-if="!hide"
+        >
             <button class="success"
                     @click="isSuccess"
             >支付成功</button>
@@ -42,14 +44,15 @@
 <script>
   import {request} from '@/util'
   import cart from '@/pages/public_components/cart'
-  import { mapGetters, mapState } from 'vuex'
+  import { mapGetters, mapState, mapMutations } from 'vuex'
+  import * as cartTypes from '@/store/cart/cartTypes'
   import foot from './components/foot'
   export default {
     name: 'shoppingcart',
     data () {
       return {
         flag: true,
-        hide: false,
+        hide: true,
         setContentHeight0: ''
       }
     },
@@ -62,8 +65,12 @@
       ...mapState('cart', ['totalGoodsData'])
     },
     methods: {
+      ...mapMutations('cart', {
+        removeCart: cartTypes.REMOVE_FLAG_TRUE_CART
+      }),
       contentHide () {
         this.hide = false
+        console.log('hide', this.hide)
       },
       async isSuccess () {
         const openId = await wx.getStorageSync('userInfo').openId
@@ -77,12 +84,32 @@
             openId
           }
         })
-        console.log(res, this.getSubData)
+        console.log(res)
+        this.hide = true
+        console.log('hide', this.hide)
+        await this.removeCart()
+      },
+      async isFailed () {
+        const openId = await wx.getStorageSync('userInfo').openId
+        const res = await request({
+          method: 'POST',
+          url: '/weapp/submitOrder',
+          data: {
+            data: this.getSubData,
+            pay: 0,
+            totalPrice: this.getCartTotalPrices,
+            openId
+          }
+        })
+        console.log(res)
+        this.hide = true
+        console.log('hide', this.hide)
+        await this.removeCart()
       }
     },
     onHide () {
-      this.hide = false
-      console.log('hide')
+      // this.hide = false
+      console.log('hide', this.hide)
     }
   }
 </script>

@@ -4,6 +4,7 @@
     "pages/comment/main",
     "pages/me/main",
     "pages/detail/main",
+    "pages/orders/main",
     "pages/shoppingcart/main"
   ],
   "window": {

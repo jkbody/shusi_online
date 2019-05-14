@@ -2,7 +2,14 @@
     <div class="container">
         <user-login></user-login>
         <year-progress></year-progress>
-        <scan-books></scan-books>
+        <div class="content border-bottom border-top">
+            <div class="scan">
+                <scan-books></scan-books>
+            </div>
+            <div class="orders">
+                <orders></orders>
+            </div>
+        </div>
         <!--<vuex-test></vuex-test>-->
     </div>
 </template>
@@ -10,13 +17,15 @@
 import yearProgress from './components/yearProgress'
 import userLogin from './components/userLogin'
 import scanBooks from './components/scanBooks'
+import orders from './components/orders'
 // import vuexTest from './components/vuexTest'
 export default {
   name: 'booksIndex',
   components: {
     yearProgress,
     userLogin,
-    scanBooks
+    scanBooks,
+    orders
     // vuexTest
   },
   created () {
@@ -29,4 +38,11 @@ export default {
 .container
     padding 0 30rpx
     columnCenter()
+    .content
+        display flex
+        .scan
+            width 40%
+        .orders
+            flex: 1
+
 </style>

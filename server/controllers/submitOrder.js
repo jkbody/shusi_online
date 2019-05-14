@@ -1,16 +1,21 @@
 const {mysql} = require('../qcloud')
 
 module.exports = async (ctx) => {
-    // data={book_id, comment, openid, location, phone}
-    // const data = ctx.request.body
-    // const {book_id, comment, open_id, location, phone} = ctx.request.body
-    const data = await ctx.request.body
+    const {data, pay, totalPrice, openId} = await ctx.request.body
+    const orderData = {
+        open_id: openId,
+        goods_list: JSON.stringify(data),
+        pay: pay,
+        total_price: totalPrice
+    }
     try {
-        await mysql('orders').insert(data)
-        ctx.state.data = {
-            code: 0,
+        await mysql('orders').insert(orderData)
+        ctx.state = await {
             data: {
-                msg: 'success'
+                code: 0,
+                data: {
+                    msg: 'submit orders success'
+                }
             }
         }
     } catch (e) {

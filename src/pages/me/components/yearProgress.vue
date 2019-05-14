@@ -41,7 +41,7 @@
 
 <style lang="stylus" scoped>
     .container
-        font-size 34rpx
+        font-size 30rpx
         margin-top 40rpx
         p
             margin-top 30rpx

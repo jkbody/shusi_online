@@ -52,7 +52,7 @@ const mutations = {
       if (v.flag) v.flag = false
     })
   },
-  [type.REMOVE_SOME_CART] (state) {
+  [type.REMOVE_FLAG_TRUE_CART] (state) {
     state.totalGoodsData = state.totalGoodsData.filter(v => !v.flag)
     // state.totalGoodsData.forEach((v, index, arr) => {
     //   if (v.flag) {

@@ -21,5 +21,7 @@ create table Orders(
     id int not null auto_increment primary key,
     open_id varchar(200) not null,
     orders varchar(2000) not null,
-    pay varchar(20) not null
+    Money decimal(10,2) not null,
+    pay varchar(20) not null,
+    CreatTime  datetime null default current_timestamp
 );

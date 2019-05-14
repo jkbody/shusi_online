@@ -158,7 +158,8 @@
           isbn: this.detailBook.isbn,
           open_id: this.openId,
           detailBook: this.detailBook,
-          flag: true
+          flag: true,
+          time: Date.parse(new Date())
         }
         await console.log(this.totalGoodsData)
         await this.setGoodsCart(cartData)
@@ -187,6 +188,7 @@
         }
       },
       test () {
+        console.log()
         console.log('id', this.$root.$mp.query.id)
         if (this.$root.$mp.query.id === undefined) {
           console.log('在购物车页面')

@@ -68,7 +68,7 @@
         checkedFlag: cartTypes.SET_FLAG,
         setTrue: cartTypes.SET_ALL_FLAG_TRUE,
         setFlase: cartTypes.SET_ALL_FLAG_FALSE,
-        removeSomeCarts: cartTypes.REMOVE_SOME_CART
+        removeSomeCarts: cartTypes.REMOVE_FLAG_TRUE_CART
       }),
       selectAll () {
         if (this.flag) {

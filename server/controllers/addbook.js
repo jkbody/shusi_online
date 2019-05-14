@@ -28,9 +28,6 @@ module.exports = async (ctx) => {
         }).join(',')
         // 作者
         const author = bookinfo.author.join(',')
-        // console.log({
-        //     isbn: data.isbn, open_id: data.open_id, rate, title, image, alt, publisher, summary, price, tags, author
-        // })
         try {
             // 添加到数据库
             await mysql('books').insert({
