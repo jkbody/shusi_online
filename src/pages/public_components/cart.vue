@@ -150,8 +150,8 @@
           return item.isbn === this.detailBook.isbn
         })
       },
-      submitCart () {
-        const cartData = {
+      async submitCart () {
+        const cartData = await {
           count: this.cartData.count,
           price: this.cartData.price,
           totalPrice: this.cartData.totalPrice,
@@ -160,8 +160,8 @@
           detailBook: this.detailBook,
           flag: true
         }
-        this.setGoodsCart(cartData)
-        console.log(this.totalGoodsData)
+        await console.log(this.totalGoodsData)
+        await this.setGoodsCart(cartData)
       },
       bindMinus () {
         // 如果只有1件了，就不允许再减了

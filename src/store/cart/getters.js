@@ -16,6 +16,9 @@ const getters = {
     })
     // console.log(count)
     return count
+  },
+  getSubData: (state) => {
+    return state.totalGoodsData.filter(v => v.flag)
   }
 }
 export default getters

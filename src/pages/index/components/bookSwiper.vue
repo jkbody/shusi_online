@@ -1,5 +1,5 @@
 <template>
-    <div class="swiper_wrap">
+    <div class="swiper_wrap border-bottom">
         <swiper class="swiper"
                 :indicator-dots="indicatorDots"
                 :autoplay="autoplay"

@@ -1,7 +1,7 @@
 <template>
     <!--<a :href="todetail">-->
 
-    <div class="container">
+    <div class="container border-bottom">
         <div
          class="book"
          @click="toDetail"

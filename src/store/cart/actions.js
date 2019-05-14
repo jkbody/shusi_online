@@ -6,8 +6,8 @@ const actions = {
     if (state.totalGoodsData.length) {
       const hasIsbn = state.totalGoodsData.find(item => {
         if (item.isbn === obj.isbn) {
-          commit(type.SET_GOODS_CART, obj)
-          console.log('购物车有这本书，修改数量')
+          // commit(type.SET_GOODS_CART, obj)
+          console.log('购物车有这本书，不同提交')
           return true
         }
       })

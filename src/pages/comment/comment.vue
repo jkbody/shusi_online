@@ -2,11 +2,6 @@
 <template>
     <div class="container">
         <div v-if="show">
-            <div class="title border-bottom">评论<br>▼</div>
-            <div v-if="!getComment.data.length" class="none">没有点评</div>
-            <comments-list
-                    :comments="getComment.data"
-            ></comments-list>
             <div class="title">我上传的书</div>
             <div class="title border-bottom">▼</div>
             <div v-if="!books.length" class="none">没有上传书</div>
@@ -18,6 +13,11 @@
                     :key="book.id"
             ></book-list>
         </div>
+            <div class="title border-bottom">评论<br>▼</div>
+            <div v-if="!getComment.data.length" class="none">没有点评</div>
+            <comments-list
+                    :comments="getComment.data"
+            ></comments-list>
         <div v-show="!show">
             <div class="login">请登录</div>
         </div>
@@ -119,6 +119,7 @@
 <style lang="stylus" scoped>
     .container
         .title
+            color #aaa
             text-align center
             font-size 40rpx
         .login
@@ -129,6 +130,6 @@
             flex-direction column
             justify-content center
         .none
-            text-align center
             color #aaa
+            text-align center
 </style>

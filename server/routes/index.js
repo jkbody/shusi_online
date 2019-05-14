@@ -50,5 +50,6 @@ router.get('/commentlist', controllers.commentlist)
 router.get('/getCollect', controllers.getCollect)
 // 获取是否收藏
 router.get('/getIsCollect', controllers.getIsCollect)
-
+// 增加订单
+router.post('/submitOrder', controllers.submitOrder)
 module.exports = router

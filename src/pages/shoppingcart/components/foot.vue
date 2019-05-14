@@ -1,8 +1,9 @@
 <template>
     <div class="container border-top">
-        <div class="content">
+        <div class="content"
+        >
             <div class="item selectAll"
-                 :style="!totalGoodsData.length ? {height:0}:{height:80 + 'rpx'}"
+                 :class="height0"
                  @click="selectAll"
             >
                 <span class="all iconfont"
@@ -14,9 +15,13 @@
                 <span v-show="flag"> 取消全选</span>
                 <span v-show="!flag"> 全 选</span>
             </div>
+            <!--<div class="item delete cartHide"-->
+                 <!--@click="removeSomeCarts"-->
+                 <!--:style="!totalGoodsData.length ? {height:0}:{height:80 + 'rpx'}"-->
+            <!--&gt;-->
             <div class="item delete cartHide"
                  @click="removeSomeCarts"
-                 :style="!totalGoodsData.length ? {height:0}:{height:80 + 'rpx'}"
+                 :class="height0"
             >
                 <p>删 除</p>
             </div>
@@ -40,7 +45,9 @@
     name: 'foot',
     data () {
       return {
-        openId: ''
+        openId: '',
+        setContentHeight0: '',
+        height_0_flag: true
       }
     },
     computed: {
@@ -50,6 +57,10 @@
         return this.totalGoodsData.every(v => {
           return v.flag === true
         })
+      },
+      height0 () {
+        return !this.totalGoodsData.length ? 'height_0' : ''
+        // return this.totalGoodsData.length ? 'height_0' : ''
       }
     },
     methods: {
@@ -74,7 +85,9 @@
         })
       },
       handleBay () {
-        console.log(typeof this.totalGoodsData[0].totalPrice)
+        console.log('click')
+        return this.$emit('countHide')
+        // console.log(typeof this.totalGoodsData[0].totalPrice)
       }
     },
     onShow () {
@@ -111,6 +124,8 @@
             align-items center
             height 80rpx
             background rgb(250,250,250)
+            .height_0
+                height 0
             .item
                 overflow hidden
                 text-align center
