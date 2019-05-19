@@ -5,7 +5,7 @@ const {mysql} = require('../qcloud')
 module.exports = async (ctx) => {
     const {page, openId} = ctx.request.query
     const size = 10
-    const allBooks = mysql('books').select('books.*', 'csessioninfo.user_info').join('csessioninfo', 'books.open_id', 'csessioninfo.open_id').orderBy('books.id', 'desc').limit(size).offset(Number(page) * size)
+    const allBooks = mysql('books').select('books.*', 'cSessionInfo.user_info').join('cSessionInfo', 'books.open_id', 'cSessionInfo.open_id').orderBy('books.id', 'desc').limit(size).offset(Number(page) * size)
     let books
     if (openId === undefined) { // 通过首页获取到的books list
         books = await allBooks

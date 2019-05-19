@@ -2,20 +2,24 @@
     <div class="container">
         <div v-if="detailBook.title"
         >
-            <detail-header :detailBook="detailBook"></detail-header>
-            <detail-content :detailBook="detailBook"></detail-content>
-            <div class="title">评论<br>▼</div>
-            <comments-list  :comments="getComment.data"></comments-list>
-            <div v-show="show">
-                <Comment
-                        :detailBook="detailBook"
-                        :getComment="getComment"
-                        :bookId="bookId"
-                ></Comment>
+            <div class="content">
+                <detail-header :detailBook="detailBook"></detail-header>
+                <detail-content :detailBook="detailBook"></detail-content>
+                <div class="title">评论<br>▼</div>
+                <comments-list  :comments="getComment.data"></comments-list>
+                <div v-show="show">
+                    <Comment
+                            :detailBook="detailBook"
+                            :getComment="getComment"
+                            :bookId="bookId"
+                    ></Comment>
+                </div>
             </div>
-            <foot :flag="initialFlag"
-                  :detailBook="detailBook"
-            ></foot>
+            <div class="foot">
+                <foot :flag="initialFlag"
+                      :detailBook="detailBook"
+                ></foot>
+            </div>
         </div>
     </div>
 </template>
@@ -143,10 +147,15 @@
 
 <style lang="stylus" scoped>
     .container
-        margin-bottom 90rpx
-        .title
-            margin-top 20rpx
-            text-align center
-            font-size 40rpx
+        margin-bottom 200rpx
+        .foot
+            position fixed
+            bottom 0
+            z-index 444
+        .content
+            .title
+                margin-top 20rpx
+                text-align center
+                font-size 40rpx
 
 </style>

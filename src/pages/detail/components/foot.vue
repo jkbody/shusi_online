@@ -1,8 +1,10 @@
 <template>
     <div class="container">
-        <div class="cartContainer">
+        <div class="cartContainer"
+             :style="getBottom"
+        >
             <cart :detailBook="detailBook"
-                  :showShop="showShop"
+                  @addSuccess="addSuccess"
             ></cart>
         </div>
         <div class="content">
@@ -13,13 +15,13 @@
                 <p>首页</p>
             </div>
             <div class="item collect"
-                 @click="getCollect">
+                 @click.stop="getCollect">
                 <p v-show="!flag" class="iconfont">&#xeca7;</p>
                 <p v-show="flag" class="iconfont active">&#xeca6;</p>
                 <p>收藏</p>
             </div>
             <div class="item addShop"
-                 @click="handleAddShop"
+                 @click.stop="handleAddShop"
             >
                 <p class="iconfont"
                    v-show="!showShop&&!hasGoods"
@@ -65,6 +67,9 @@
       ...mapState('shoppingCart', ['cartData']),
       hasGoods () {
         return this.cartData.count > 1
+      },
+      getBottom () {
+        return this.showShop ? 'bottom:140rpx' : 'bottom:-210rpx'
       }
     },
     methods: {
@@ -74,6 +79,10 @@
         wx.switchTab({
           url: '/pages/index/main'
         })
+      },
+      addSuccess () {
+        // console.log('add')
+        this.showShop = false
       },
       handleAddShop () {
         if (this.openId) {
@@ -117,23 +126,26 @@
 
 <style lang="stylus" scoped>
 .container
-    overflow hidden
     font-size 25rpx
     color #333
-    position fixed
-    left 0
-    right 0
-    bottom 0
-    height 442rpx
-    display flex
-    flex-direction column
     .cartContainer
-        /*bottom 90rpx*/
-        flex 1
+        position fixed
+        left 0
+        right 0
+        height 300rpx
+        transition bottom .5s
+        /*bottom -300rpx*/
+        /*flex 1*/
         border-radius  10rpx 10rpx 0 0
         width 100%
         border none
+        z-index 333
     .content
+        z-index 888
+        position fixed
+        left 0
+        right 0
+        bottom 0
         border 1px solid #ccc
         padding-top 15rpx
         height 90rpx

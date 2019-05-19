@@ -1,6 +1,6 @@
 const CONF = {
     port: '5757',
-    rootPathname: '/shusi/',
+    rootPathname: '',
 
     // 微信小程序 App ID
     appId: 'wxab5fe3d8ca2614a3',
@@ -18,8 +18,8 @@ const CONF = {
     qcloudAppId: '1259000913',
     qcloudSecretId: 'AKIDZS5UKW5HlxudBXpXAbnNIDpENZVAstsa',
     qcloudSecretKey: 'bw5HH6f4D6wtynLfkEVdaHKdhXOzvpWx',
-    wxMessageToken: 'weixinmsgtoken',
-    networkTimeout: 30000,
+    // wxMessageToken: 'weixinmsgtoken',
+    // networkTimeout: 30000,
     /**
      * MySQL 配置，用来存储 session 和用户信息
      * 若使用了腾讯云微信小程序解决方案
@@ -30,8 +30,7 @@ const CONF = {
         port: 3306,
         user: 'root',
         db: 'cAuth',
-        // pass: 'wxab5fe3d8ca2614a3',
-        pass: 'jiangkun1.',
+        pass: 'wxab5fe3d8ca2614a3',
         char: 'utf8mb4'
     },
 

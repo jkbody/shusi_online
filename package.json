@@ -24,7 +24,13 @@
     "lint": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
+    "bfj-node4": "^5.3.1",
+    "browserslist": "^1.7.7",
     "mpvue": "^2.0.0",
+    "node-pre-gyp": "^0.12.0",
+    "vue": "^2.0.0",
+    "vue-loader": "^13.7.3",
+    "vue-template-compiler": "^2.0.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4",
     "wafer2-client-sdk": "^2.1.0"

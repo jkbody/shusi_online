@@ -72,11 +72,15 @@
 
 <style lang="stylus" scoped>
 .swiper_wrap
-    margin-top 15rpx
-    .slide-image
-        width 30%
-        height 100%
-        margin 0 1.5%
+    margin-top 10rpx
+    height 420rpx
+    .swiper
+        height 400rpx
+        .slide-image
+            margin-left  1.5%
+            width 31.33%
+            height 400rpx
+
 
 
 </style>

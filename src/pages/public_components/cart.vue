@@ -1,8 +1,11 @@
 <template>
     <div class="container">
         <div class="cart border-bottom"
-             v-show="showShop"
+             v-if="true"
         >
+        <!--<div class="cart border-bottom"-->
+             <!--v-if="showShop"-->
+        <!--&gt;-->
             <div class="cartContent">
                 <div class="select iconfont"
                      v-if="isCart"
@@ -72,6 +75,7 @@
 <script>
   // import storeMouthodsName from '@/store/shoppingCart/storeMouthodsName'
   import { mapState, mapMutations, mapActions } from 'vuex'
+  import {showSuccess} from '@/util'
   import * as type from '@/store/shoppingCart/type'
   import * as cartTypes from '@/store/cart/cartTypes'
   export default {
@@ -163,6 +167,8 @@
         }
         await console.log(this.totalGoodsData)
         await this.setGoodsCart(cartData)
+        await showSuccess('加入成功')
+        await this.$emit('addSuccess')
       },
       bindMinus () {
         // 如果只有1件了，就不允许再减了
@@ -261,6 +267,7 @@
             .price
                 text-align right
                 float right
+                padding-right 20rpx
                 .add
                     background $bgcolor
                     color #eee

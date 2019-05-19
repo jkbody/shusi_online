@@ -4,7 +4,7 @@ module.exports = async (ctx) => {
     //  每次请求，count +1
     // 加frist（）是因为返回的是一个数组 也可以斜插detail[0]
     await mysql('books').where('id', bookId).increment('count', 1)
-    const deatil = await mysql('books').select('books.*', 'csessioninfo.user_info').where('id', bookId).join('csessioninfo', 'books.open_id', 'csessioninfo.open_id').first()
+    const deatil = await mysql('books').select('books.*', 'cSessionInfo.user_info').where('id', bookId).join('cSessionInfo', 'books.open_id', 'cSessionInfo.open_id').first()
     const info = JSON.parse(deatil.user_info)
     ctx.state.data = {
         code: 0,
